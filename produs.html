@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Produs - MoldaStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css"/>
+  <style>
+    .product-page { max-width: 1200px; margin: 40px auto; padding: 0 5%; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+    .gallery-main { width: 100%; height: 560px; border-radius: 28px; overflow: hidden; background: var(--bg-2); position: relative; }
+    .gallery-main img { width: 100%; height: 100%; object-fit: cover; display: block; transition: opacity 0.3s; }
+    .gallery-thumbs { display: flex; gap: 10px; margin-top: 12px; }
+    .gallery-thumb { width: 80px; height: 80px; border-radius: 14px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s, transform 0.2s; flex-shrink: 0; }
+    .gallery-thumb.active { border-color: var(--accent); }
+    .gallery-thumb:hover { transform: translateY(-2px); }
+    .gallery-thumb img { width: 100%; height: 100%; object-fit: cover; }
+    .prod-detail { position: sticky; top: 88px; }
+    .prod-breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 14px; }
+    .prod-breadcrumb a { color: var(--muted); text-decoration: none; } 
+    .prod-breadcrumb a:hover { color: var(--accent); }
+    .prod-title-lg { font-family: var(--font-display); font-size: 36px; font-weight: 700; line-height: 1.1; margin-bottom: 10px; letter-spacing: -1px; }
+    .prod-rating-row { display: flex; align-items: center; gap: 10px; margin-bottom: 18px; }
+    .stars { color: #d18b42; font-size: 16px; }
+    .rating-val { font-weight: 700; font-size: 14px; }
+    .rating-cnt { color: var(--muted); font-size: 13px; }
+    .prod-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 22px; }
+    .prod-price-main { font-family: var(--font-display); font-size: 32px; font-weight: 700; color: var(--accent); }
+    .prod-price-old { font-size: 20px; color: var(--muted); text-decoration: line-through; }
+    .prod-price-save { background: #e8f5e2; color: #2f7d57; border-radius: 999px; padding: 4px 12px; font-size: 13px; font-weight: 700; }
+    .prod-section-label { font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--muted); margin-bottom: 10px; }
+    .size-grid { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 22px; }
+    .size-btn { min-width: 52px; height: 44px; border: 1.5px solid var(--line); border-radius: 12px; background: var(--white); font-weight: 600; font-size: 14px; cursor: pointer; font-family: var(--font-body); transition: 0.2s; color: var(--text); }
+    .size-btn:hover { border-color: var(--accent); color: var(--accent); }
+    .size-btn.active { background: var(--text); color: var(--white); border-color: var(--text); }
+    .size-btn.unavailable { opacity: 0.35; cursor: not-allowed; text-decoration: line-through; }
+    .color-dots { display: flex; gap: 10px; margin-bottom: 22px; align-items: center; flex-wrap: wrap; }
+    .color-dot { display: flex; align-items: center; gap: 6px; padding: 6px 14px; border: 1.5px solid var(--line); border-radius: 999px; cursor: pointer; font-size: 13px; font-weight: 600; transition: 0.2s; }
+    .color-dot.active { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+    .qty-row { display: flex; align-items: center; gap: 12px; margin-bottom: 22px; }
+    .qty-btn { width: 38px; height: 38px; border: 1.5px solid var(--line); border-radius: 10px; background: var(--white); font-size: 18px; cursor: pointer; font-family: var(--font-body); color: var(--text); transition: 0.2s; }
+    .qty-btn:hover { background: var(--bg-2); }
+    .qty-val { font-size: 18px; font-weight: 700; min-width: 32px; text-align: center; }
+    .prod-actions { display: flex; gap: 10px; margin-bottom: 24px; }
+    .btn-add-big { flex: 1; padding: 16px; background: var(--text); color: var(--white); border: none; border-radius: 999px; font-size: 15px; font-weight: 700; cursor: pointer; font-family: var(--font-body); transition: 0.22s; }
+    .btn-add-big:hover { background: var(--accent); transform: translateY(-2px); }
+    .btn-fav-big { width: 52px; height: 52px; border: 1.5px solid var(--line); border-radius: 999px; background: var(--white); font-size: 20px; cursor: pointer; transition: 0.2s; flex-shrink: 0; }
+    .btn-fav-big.active { background: #fff0f0; border-color: #e04040; color: #e04040; }
+    .btn-fav-big:hover { transform: scale(1.1); }
+    .prod-desc-text { color: var(--muted); line-height: 1.7; font-size: 15px; margin-bottom: 22px; }
+    .prod-features { display: flex; flex-direction: column; gap: 10px; margin-bottom: 24px; padding: 18px; background: var(--bg); border-radius: 18px; }
+    .prod-feat { display: flex; gap: 10px; align-items: center; font-size: 14px; }
+    .prod-feat-icon { font-size: 18px; flex-shrink: 0; }
+    .out-of-stock-badge { background: #fef2f2; color: #c0392b; border: 1px solid #fcc; border-radius: 10px; padding: 12px 16px; font-weight: 600; font-size: 14px; margin-bottom: 18px; text-align: center; }
+    .notify-form { display: flex; gap: 8px; margin-bottom: 22px; }
+    .notify-input { flex: 1; border: 1.5px solid var(--line); border-radius: 12px; padding: 12px 14px; font-size: 14px; outline: none; font-family: var(--font-body); background: var(--bg); }
+    .notify-input:focus { border-color: var(--accent); }
+    .notify-btn { padding: 12px 18px; background: var(--accent); color: white; border: none; border-radius: 12px; font-weight: 700; font-size: 14px; cursor: pointer; font-family: var(--font-body); }
+    .reviews-section { max-width: 1200px; margin: 0 auto 60px; padding: 0 5%; }
+    .reviews-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 28px; }
+    .rating-summary { display: flex; align-items: center; gap: 24px; background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 24px 28px; margin-bottom: 28px; }
+    .rating-big { font-family: var(--font-display); font-size: 56px; font-weight: 700; color: var(--accent); line-height: 1; }
+    .rating-bars { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .rating-bar-row { display: flex; align-items: center; gap: 8px; font-size: 13px; }
+    .rating-bar-bg { flex: 1; height: 6px; background: var(--bg-2); border-radius: 3px; overflow: hidden; }
+    .rating-bar-fill { height: 100%; background: #d18b42; border-radius: 3px; }
+    .review-card { background: var(--white); border: 1px solid var(--line); border-radius: 20px; padding: 22px; margin-bottom: 14px; }
+    .review-top { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .review-author { display: flex; align-items: center; gap: 10px; }
+    .review-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg,var(--accent),var(--accent-dark)); color: white; display: grid; place-items: center; font-weight: 700; font-size: 12px; flex-shrink: 0; }
+    .review-name { font-weight: 700; font-size: 14px; }
+    .review-date { color: var(--muted); font-size: 12px; margin-top: 2px; }
+    .review-stars { color: #d18b42; font-size: 14px; letter-spacing: 1px; }
+    .review-text { color: var(--muted); font-size: 14px; line-height: 1.65; }
+    .similar-section { max-width: 1200px; margin: 0 auto 80px; padding: 0 5%; }
+    @media(max-width:900px) {
+      .product-page { grid-template-columns: 1fr; gap: 28px; }
+      .prod-detail { position: static; }
+      .gallery-main { height: 380px; }
+    }
+  </style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+<div id="scroll-progress"></div>
+
+<div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+<div class="cart-drawer" id="cartDrawer">
+  <div class="cart-header">
+    <div class="cart-title">Cosul tau</div>
+    <button class="cart-close" onclick="closeCart()">✕</button>
+  </div>
+  <div class="cart-body" id="cartBody">
+    <div class="cart-empty"><div class="cart-empty-icon">🛍</div><p>Cosul tau este gol.</p></div>
+  </div>
+  <div class="cart-footer">
+    <div class="cart-subtotal"><span>Total</span><span class="amt" id="cartTotal">0 MDL</span></div>
+    <button class="btn-checkout" onclick="goToCheckout()">Finalizeaza comanda →</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"><span class="toast-icon">✓</span><span id="toastMsg"></span></div>
+
+<div class="auth-modal-overlay" id="authModal" onclick="if(event.target===this)closeAuthModal()">
+  <div class="auth-modal">
+    <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+    <div class="auth-modal-icon">🛍️</div>
+    <h2 class="auth-modal-title">Vrei sa adaugi in cos?</h2>
+    <p class="auth-modal-sub">Autentifica-te pentru a salva produsele si a finaliza comanda.</p>
+    <div class="auth-modal-actions">
+      <button class="auth-btn-login" onclick="goToLogin()">🔑 Intra in cont</button>
+      <button class="auth-btn-register" onclick="goToRegister()">✨ Creeaza cont gratuit</button>
+      <button class="auth-btn-guest" onclick="continueAsGuest()">Continua fara cont</button>
+    </div>
+  </div>
+</div>
+
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Molda<span style="color:var(--accent)">Store</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#categories">Femei</a></li>
+    <li><a href="index.html#categories">Barbati</a></li>
+    <li><a href="index.html#products">Colectii</a></li>
+    <li><a href="index.html#promo" class="nav-sale">Reduceri</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button id="accountBtn" class="nav-icon-btn" style="font-size:13px;font-weight:600;width:auto;padding:0 14px;border-radius:999px;" onclick="window.location.href='login.html'">👤</button>
+    <button class="btn-cart-nav" onclick="openCart()">Cos <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<div class="product-page" id="productPage">
+  <div>
+    <div class="gallery-main"><img id="mainImg" src="" alt=""/></div>
+    <div class="gallery-thumbs" id="thumbsRow"></div>
+  </div>
+  <div class="prod-detail" id="prodDetail"></div>
+</div>
+
+<div class="reviews-section">
+  <div class="reviews-header">
+    <h2 class="section-title">Recenzii clienti</h2>
+  </div>
+  <div class="rating-summary" id="ratingSummary"></div>
+  <div id="reviewsList"></div>
+</div>
+
+<div class="similar-section">
+  <div class="section-header">
+    <h2 class="section-title">Produse similare</h2>
+    <a href="index.html#products" class="section-link">Vezi toate →</a>
+  </div>
+  <div class="prod-grid" id="similarGrid"></div>
+</div>
+
+<script src="./js/script.js"></script>
+<script>
+let currentProduct = null;
+let selectedSize = null;
+let selectedColor = null;
+let quantity = 1;
+let isFav = false;
+
+function getProductIdFromURL() {
+  const params = new URLSearchParams(window.location.search);
+  return parseInt(params.get('id'));
+}
+
+function renderStars(rating) {
+  const full = Math.floor(rating);
+  const half = rating % 1 >= 0.5;
+  let s = '';
+  for(let i=0;i<full;i++) s += '★';
+  if(half) s += '½';
+  const empty = 5 - Math.ceil(rating);
+  for(let i=0;i<empty;i++) s += '☆';
+  return s;
+}
+
+function loadProduct() {
+  const id = getProductIdFromURL();
+  fetch('./produse.json')
+    .then(r=>r.json())
+    .then(data=>{
+      products = data;
+      currentProduct = data.find(p=>p.id===id) || data[0];
+      renderProductPage();
+      renderSimilar();
+    });
+}
+
+function renderProductPage() {
+  const p = currentProduct;
+  const favs = JSON.parse(localStorage.getItem('favorites')||'[]');
+  isFav = favs.includes(p.id);
+
+  document.title = p.name + ' - MoldaStore';
+
+  const mainImg = document.getElementById('mainImg');
+  mainImg.src = p.images[0];
+  mainImg.alt = p.name;
+
+  const thumbs = document.getElementById('thumbsRow');
+  thumbs.innerHTML = p.images.map((img,i)=>`
+    <div class="gallery-thumb ${i===0?'active':''}" onclick="switchImg('${img}',this)">
+      <img src="${img}" alt=""/>
+    </div>
+  `).join('');
+
+  selectedColor = p.colors[0];
+  selectedSize = null;
+
+  const save = p.oldPrice ? Math.round((1 - p.price/p.oldPrice)*100) : 0;
+  const outOfStock = !p.inStock;
+
+  document.getElementById('prodDetail').innerHTML = `
+    <div class="prod-breadcrumb">
+      <a href="index.html">Acasa</a> / <a href="index.html#products">Produse</a> / ${p.name}
+    </div>
+    <h1 class="prod-title-lg">${p.name}</h1>
+    <div class="prod-rating-row">
+      <span class="stars">${renderStars(p.rating)}</span>
+      <span class="rating-val">${p.rating}</span>
+      <span class="rating-cnt">(${p.reviews} recenzii)</span>
+      ${p.tag ? `<span class="product-badge" style="position:static;font-size:12px;">${p.badge}</span>` : ''}
+    </div>
+    <div class="prod-price-row">
+      <span class="prod-price-main">${p.price} MDL</span>
+      ${p.oldPrice ? `<span class="prod-price-old">${p.oldPrice} MDL</span>` : ''}
+      ${save > 0 ? `<span class="prod-price-save">-${save}%</span>` : ''}
+    </div>
+
+    <div class="prod-section-label">Culoare — <span id="colorLabel" style="color:var(--text);font-weight:700;">${p.colors[0]}</span></div>
+    <div class="color-dots" id="colorDots">
+      ${p.colors.map((c,i)=>`<div class="color-dot ${i===0?'active':''}" onclick="selectColor('${c}',this)">${c}</div>`).join('')}
+    </div>
+
+    <div class="prod-section-label">Marime — <span id="sizeLabel" style="color:var(--muted)">Alege marimea</span></div>
+    <div class="size-grid">
+      ${p.sizes.map(s=>`<button class="size-btn" onclick="selectSize('${s}',this)">${s}</button>`).join('')}
+    </div>
+
+    <div class="prod-section-label">Cantitate</div>
+    <div class="qty-row">
+      <button class="qty-btn" onclick="changeQty(-1)">−</button>
+      <span class="qty-val" id="qtyVal">1</span>
+      <button class="qty-btn" onclick="changeQty(1)">+</button>
+    </div>
+
+    ${outOfStock ? `
+      <div class="out-of-stock-badge">Momentan indisponibil — Anunta-ma cand revine</div>
+      <div class="notify-form">
+        <input class="notify-input" id="notifyEmail" type="email" placeholder="Email tau..." />
+        <button class="notify-btn" onclick="notifyMe()">Anunta-ma</button>
+      </div>
+    ` : `
+      <div class="prod-actions">
+        <button class="btn-add-big" onclick="addCurrentToCart()">🛍 Adauga in cos</button>
+        <button class="btn-fav-big ${isFav?'active':''}" id="favBtn" onclick="toggleFav()" title="Favorit">
+          ${isFav ? '❤️' : '♡'}
+        </button>
+      </div>
+    `}
+
+    <p class="prod-desc-text">${p.descLong}</p>
+
+    <div class="prod-features">
+      <div class="prod-feat"><span class="prod-feat-icon">🚚</span><span>Livrare gratuita peste 500 MDL · 24-48h</span></div>
+      <div class="prod-feat"><span class="prod-feat-icon">↩</span><span>Returnare gratuita 30 de zile</span></div>
+      <div class="prod-feat"><span class="prod-feat-icon">✅</span><span>Produs autentic, garantie calitate</span></div>
+    </div>
+  `;
+
+  renderRatingSummary();
+  renderReviews();
+}
+
+function switchImg(src, el) {
+  document.getElementById('mainImg').src = src;
+  document.querySelectorAll('.gallery-thumb').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selectColor(color, el) {
+  selectedColor = color;
+  document.getElementById('colorLabel').textContent = color;
+  document.querySelectorAll('.color-dot').forEach(d=>d.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function selectSize(size, el) {
+  selectedSize = size;
+  document.getElementById('sizeLabel').textContent = size;
+  document.querySelectorAll('.size-btn').forEach(b=>b.classList.remove('active'));
+  el.classList.add('active');
+}
+
+function changeQty(delta) {
+  quantity = Math.max(1, Math.min(10, quantity + delta));
+  document.getElementById('qtyVal').textContent = quantity;
+}
+
+function addCurrentToCart() {
+  if (!selectedSize) { showToast('Alege o marime mai intai'); return; }
+  if (!isLoggedIn()) { showAuthModal(currentProduct.id); return; }
+  for(let i=0;i<quantity;i++) {
+    cart.push({...currentProduct, selectedSize, selectedColor});
+  }
+  updateCart();
+  openCart();
+  showToast('Produs adaugat in cos');
+}
+
+function toggleFav() {
+  const favs = JSON.parse(localStorage.getItem('favorites')||'[]');
+  const idx = favs.indexOf(currentProduct.id);
+  if(idx === -1) { favs.push(currentProduct.id); isFav = true; }
+  else { favs.splice(idx,1); isFav = false; }
+  localStorage.setItem('favorites', JSON.stringify(favs));
+  const btn = document.getElementById('favBtn');
+  if(btn) { btn.className = 'btn-fav-big' + (isFav?' active':''); btn.textContent = isFav?'❤️':'♡'; }
+  showToast(isFav ? 'Adaugat la favorite' : 'Eliminat din favorite');
+}
+
+function notifyMe() {
+  const email = document.getElementById('notifyEmail').value;
+  if(!email.includes('@')) { showToast('Email invalid'); return; }
+  showToast('Te vom anunta cand produsul revine in stoc!');
+}
+
+function renderRatingSummary() {
+  const p = currentProduct;
+  const bars = [5,4,3,2,1].map((star,i) => {
+    const pct = [65,20,8,4,3][i];
+    return `<div class="rating-bar-row">
+      <span style="min-width:12px;">${star}</span>
+      <span style="color:#d18b42;font-size:12px;">★</span>
+      <div class="rating-bar-bg"><div class="rating-bar-fill" style="width:${pct}%"></div></div>
+      <span style="color:var(--muted);font-size:12px;min-width:28px;">${pct}%</span>
+    </div>`;
+  }).join('');
+
+  document.getElementById('ratingSummary').innerHTML = `
+    <div style="text-align:center;">
+      <div class="rating-big">${p.rating}</div>
+      <div style="color:#d18b42;font-size:18px;margin:6px 0;">${renderStars(p.rating)}</div>
+      <div style="color:var(--muted);font-size:13px;">${p.reviews} recenzii</div>
+    </div>
+    <div class="rating-bars">${bars}</div>
+  `;
+}
+
+function renderReviews() {
+  const reviews = [
+    { name:"Ana M.", loc:"Chisinau", rating:5, text:"Exact cum ma asteptam! Materialul este fin, croiala perfecta. Am comandat si imi va mai comanda cu siguranta.", date:"12 Apr 2026", initials:"AM" },
+    { name:"Dumitru L.", loc:"Balti", rating:5, text:"Livrare super rapida, produsul bine ambalat. Calitatea materialului depaseste asteptarile la acest pret.", date:"8 Apr 2026", initials:"DL" },
+    { name:"Irina C.", loc:"Cahul", rating:4, text:"Frumos, dar marimea a venit putin mai mica. Recomand sa luati o marime in plus. Altfel, calitate buna.", date:"2 Apr 2026", initials:"IC" }
+  ];
+
+  document.getElementById('reviewsList').innerHTML = reviews.map(r=>`
+    <div class="review-card">
+      <div class="review-top">
+        <div class="review-author">
+          <div class="review-avatar">${r.initials}</div>
+          <div>
+            <div class="review-name">${r.name} · ${r.loc}</div>
+            <div class="review-date">${r.date}</div>
+          </div>
+        </div>
+        <div class="review-stars">${'★'.repeat(r.rating)}${'☆'.repeat(5-r.rating)}</div>
+      </div>
+      <div class="review-text">${r.text}</div>
+    </div>
+  `).join('');
+}
+
+function renderSimilar() {
+  const similar = products.filter(p=>p.id !== currentProduct.id).slice(0,4);
+  document.getElementById('similarGrid').innerHTML = similar.map(p=>`
+    <article class="product-card" onclick="window.location.href='produs.html?id=${p.id}'" style="cursor:pointer;">
+      <div class="product-image">
+        <img src="${p.image}" class="prod-img" alt="${p.name}"/>
+        <span class="product-badge">${p.badge}</span>
+      </div>
+      <div class="product-content">
+        <div class="product-top">
+          <h3 class="product-name">${p.name}</h3>
+          <div class="product-price">${p.price} MDL</div>
+        </div>
+        <p class="product-text">${p.desc}</p>
+        <div class="product-actions">
+          <button class="btn-buy" onclick="event.stopPropagation();addToCart(${p.id})">Adauga</button>
+        </div>
+      </div>
+    </article>
+  `).join('');
+}
+
+function goToCheckout() {
+  if(!isLoggedIn()) { showAuthModal(null); return; }
+  window.location.href = 'checkout.html';
+}
+
+loadProduct();
+updateNavForUser();
+updateCart();
+</script>
+</body>
+</html>

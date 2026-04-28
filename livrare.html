@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Livrare & Retur - MoldaStore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css"/>
+  <style>
+    .info-page { max-width: 860px; margin: 60px auto 80px; padding: 0 5%; }
+    .info-title { font-family: var(--font-display); font-size: 48px; font-weight: 700; letter-spacing: -2px; margin-bottom: 10px; }
+    .info-sub { color: var(--muted); font-size: 16px; margin-bottom: 48px; }
+    .info-card { background: var(--white); border: 1px solid var(--line); border-radius: 24px; padding: 28px 32px; margin-bottom: 20px; box-shadow: var(--shadow); }
+    .info-card-header { display: flex; align-items: center; gap: 14px; margin-bottom: 16px; }
+    .info-card-icon { width: 48px; height: 48px; background: var(--accent-soft); border-radius: 14px; display: grid; place-items: center; font-size: 22px; flex-shrink: 0; }
+    .info-card-title { font-family: var(--font-display); font-size: 20px; font-weight: 700; }
+    .info-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+    .info-table th { text-align: left; padding: 10px 14px; background: var(--bg); color: var(--muted); font-weight: 700; font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .info-table td { padding: 12px 14px; border-top: 1px solid var(--line); }
+    .info-table tr:first-child td { border: none; }
+    .tag-green { background: #e8f5e2; color: #2f7d57; border-radius: 999px; padding: 4px 12px; font-size: 12px; font-weight: 700; }
+    .steps-list { display: flex; flex-direction: column; gap: 14px; }
+    .step-item { display: flex; gap: 16px; align-items: flex-start; }
+    .step-num { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); color: white; display: grid; place-items: center; font-weight: 700; font-size: 14px; flex-shrink: 0; margin-top: 2px; }
+    .step-title { font-weight: 700; font-size: 15px; margin-bottom: 4px; }
+    .step-text { color: var(--muted); font-size: 14px; line-height: 1.6; }
+    .info-text { color: var(--muted); font-size: 15px; line-height: 1.75; }
+    .info-text strong { color: var(--text); }
+  </style>
+</head>
+<body>
+<div id="scroll-progress"></div>
+<nav id="mainNav">
+  <a class="nav-logo" href="index.html">Molda<span style="color:var(--accent)">Store</span></a>
+  <ul class="nav-links">
+    <li><a href="index.html#products">Produse</a></li>
+    <li><a href="despre.html">Despre noi</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button id="accountBtn" class="nav-icon-btn" style="font-size:13px;font-weight:600;width:auto;padding:0 14px;border-radius:999px;" onclick="window.location.href='login.html'">👤</button>
+    <button class="btn-cart-nav" onclick="window.location.href='index.html'">Cos <span class="cart-count" id="cartCount">0</span></button>
+  </div>
+</nav>
+
+<div class="info-page">
+  <h1 class="info-title">Livrare & Retur</h1>
+  <p class="info-sub">Tot ce trebuie sa stii despre livrarea comenzilor si politica noastra de returnare.</p>
+
+  <div class="info-card reveal">
+    <div class="info-card-header"><div class="info-card-icon">🚚</div><div class="info-card-title">Optiuni de livrare</div></div>
+    <table class="info-table">
+      <tr><th>Metoda</th><th>Termen</th><th>Cost</th></tr>
+      <tr><td><strong>Standard — Chisinau</strong></td><td>24h</td><td><span class="tag-green">Gratuit peste 500 MDL</span></td></tr>
+      <tr><td><strong>Standard — Moldova</strong></td><td>24-48h</td><td>45 MDL</td></tr>
+      <tr><td><strong>Express — Chisinau</strong></td><td>4-6h</td><td>80 MDL</td></tr>
+      <tr><td><strong>Ridicare din magazin</strong></td><td>1-2h</td><td><span class="tag-green">Gratuit</span></td></tr>
+    </table>
+  </div>
+
+  <div class="info-card reveal">
+    <div class="info-card-header"><div class="info-card-icon">↩</div><div class="info-card-title">Politica de returnare — 30 de zile</div></div>
+    <div class="steps-list">
+      <div class="step-item"><div class="step-num">1</div><div><div class="step-title">Initiaza returul</div><div class="step-text">Contacteaza-ne prin email sau telefon in termen de 30 de zile de la primirea comenzii.</div></div></div>
+      <div class="step-item"><div class="step-num">2</div><div><div class="step-title">Pregateste coletul</div><div class="step-text">Ambaleaza produsul in starea originala, cu etichete si ambalaj intact.</div></div></div>
+      <div class="step-item"><div class="step-num">3</div><div><div class="step-title">Trimite produsul</div><div class="step-text">Curierul vine la tine gratuit sau poti aduce produsul direct in magazinul nostru.</div></div></div>
+      <div class="step-item"><div class="step-num">4</div><div><div class="step-title">Primesti banii inapoi</div><div class="step-text">Rambursarea se face in 3-5 zile lucratoare prin acelasi mijloc de plata.</div></div></div>
+    </div>
+  </div>
+
+  <div class="info-card reveal">
+    <div class="info-card-header"><div class="info-card-icon">❓</div><div class="info-card-title">Intrebari frecvente</div></div>
+    <p class="info-text"><strong>Pot returna produse la reducere?</strong><br/>Da, produsele la reducere pot fi returnate in aceleasi conditii — 30 de zile, stare originala.</p>
+    <br/>
+    <p class="info-text"><strong>Cum urmaresc comanda?</strong><br/>Dupa expediere primesti un email cu numarul de tracking. Poti urmari coletul pe site-ul curierului.</p>
+    <br/>
+    <p class="info-text"><strong>Ce se intampla daca produsul e defect?</strong><br/>Contacteaza-ne imediat. Produsele defecte sunt inlocuite sau rambursate integral, fara costuri suplimentare.</p>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-grid">
+    <div><a class="footer-logo" href="index.html"><span>MoldaStore</span></a><p class="footer-desc">Magazin de moda online cu livrare rapida in toata Republica Moldova.</p></div>
+    <div class="footer-col"><h4>Magazin</h4><ul><li><a href="index.html#categories">Femei</a></li><li><a href="index.html#categories">Barbati</a></li></ul></div>
+    <div class="footer-col"><h4>Informatii</h4><ul><li><a href="despre.html">Despre noi</a></li><li><a href="contact.html">Contact</a></li><li><a href="livrare.html">Livrare & Retur</a></li></ul></div>
+    <div class="footer-col"><h4>Cont</h4><ul><li><a href="login.html">Login</a></li><li><a href="register.html">Inregistrare</a></li></ul></div>
+  </div>
+  <div class="footer-bottom"><p>© 2026 MoldaStore. Toate drepturile rezervate.</p></div>
+</footer>
+<script src="./js/script.js"></script>
+<script>updateNavForUser(); updateCart();</script>
+</body>
+</html>

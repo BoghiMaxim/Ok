@@ -1,0 +1,191 @@
+[
+  {
+    "id": 1,
+    "name": "Rochie Urban Grace",
+    "price": 920,
+    "oldPrice": 1150,
+    "category": "femei",
+    "badge": "-20%",
+    "desc": "O rochie moderna cu croiala supla din viscoza fina.",
+    "descLong": "Confecionata din viscoza premium importata, aceasta rochie ofera confort exceptional. Croiala supla evidentiaza silueta in mod elegant, perfecta pentru diverse ocazii.",
+    "colors": [
+      "Negru",
+      "Navy",
+      "Bordeaux"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gradient": "linear-gradient(135deg,#2c1a2e,#6b3a7d)",
+    "image": "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&q=85",
+      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85",
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=85"
+    ],
+    "rating": 4.8,
+    "reviews": 124,
+    "inStock": true,
+    "tag": "bestseller"
+  },
+  {
+    "id": 2,
+    "name": "Jacheta Linen Premium",
+    "price": 850,
+    "oldPrice": null,
+    "category": "femei",
+    "badge": "Nou",
+    "desc": "Linen natural 100%, croiala relaxed-fit. Confort maxim pentru sezonul cald.",
+    "descLong": "Fabricata din in natural de calitate superioara, aceasta jacheta este respirabila si confortabila. Versatila pentru birou sau weekenduri casual.",
+    "colors": [
+      "Bej",
+      "Alb",
+      "Sage"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gradient": "linear-gradient(135deg,#d4b896,#a07850)",
+    "image": "https://images.unsplash.com/photo-1520975916090-3105956dac38?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1520975916090-3105956dac38?w=800&q=85",
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=85"
+    ],
+    "rating": 4.9,
+    "reviews": 87,
+    "inStock": true,
+    "tag": "nou"
+  },
+  {
+    "id": 3,
+    "name": "Set Casual Modern",
+    "price": 780,
+    "oldPrice": 980,
+    "category": "barbati",
+    "badge": "Top vanzari",
+    "desc": "Bumbac premium 100%, confort maxim pentru fiecare zi.",
+    "descLong": "Setul compus din tricou si pantaloni din bumbac organic. Materialul moale si respirabil isi mentine forma dupa spalari repetate.",
+    "colors": [
+      "Gri",
+      "Negru",
+      "Kaki"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL",
+      "XXL"
+    ],
+    "gradient": "linear-gradient(135deg,#3a3a3a,#6b6b6b)",
+    "image": "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=800&q=85"
+    ],
+    "rating": 4.7,
+    "reviews": 203,
+    "inStock": true,
+    "tag": "bestseller"
+  },
+  {
+    "id": 4,
+    "name": "Hanorac Soft Fit",
+    "price": 560,
+    "oldPrice": null,
+    "category": "unisex",
+    "badge": "Unisex",
+    "desc": "Fleece moale, capusa reglabila. Ideal pentru primavara si toamna.",
+    "descLong": "Confectionat din fleece de inalta calitate, moale la atingere. Capusa dubla reglabila si buzunarele frontale adauga functionalitate stilului.",
+    "colors": [
+      "Crem",
+      "Roz pudra",
+      "Sage"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gradient": "linear-gradient(135deg,#f0e6d3,#c4a882)",
+    "image": "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1503342217505-b0a15ec3261c?w=800&q=85"
+    ],
+    "rating": 4.6,
+    "reviews": 156,
+    "inStock": true,
+    "tag": ""
+  },
+  {
+    "id": 5,
+    "name": "Camasa Office Line",
+    "price": 640,
+    "oldPrice": 800,
+    "category": "barbati",
+    "badge": "Business",
+    "desc": "Poplin clasic, guler drept. Eleganta pentru mediul profesional.",
+    "descLong": "Camasa din poplin fin, tratata anti-sifon. Croiala slim-fit subliniaza silueta. Perfecta pentru intalniri de afaceri sau evenimente formale.",
+    "colors": [
+      "Alb",
+      "Bleu",
+      "Gri deschis"
+    ],
+    "sizes": [
+      "S",
+      "M",
+      "L",
+      "XL"
+    ],
+    "gradient": "linear-gradient(135deg,#dce8f5,#8ab4d8)",
+    "image": "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=800&q=85"
+    ],
+    "rating": 4.5,
+    "reviews": 98,
+    "inStock": true,
+    "tag": ""
+  },
+  {
+    "id": 6,
+    "name": "Compleu Boho Soft",
+    "price": 990,
+    "oldPrice": null,
+    "category": "femei",
+    "badge": "Exclusiv",
+    "desc": "Muslin eteric, broderie manuala. Rafinament boho pentru fiecare ocazie.",
+    "descLong": "Confectionat din muslin premium cu broderie florala manuala. Fiecare piesa este unica, realizata de artizani locali. Culorile naturale reflecta traditia moldoveneasca.",
+    "colors": [
+      "Ecru",
+      "Teracota",
+      "Miere"
+    ],
+    "sizes": [
+      "XS",
+      "S",
+      "M",
+      "L"
+    ],
+    "gradient": "linear-gradient(135deg,#c4a882,#8a6040)",
+    "image": "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85",
+    "images": [
+      "https://images.unsplash.com/photo-1509631179647-0177331693ae?w=800&q=85",
+      "https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&q=85"
+    ],
+    "rating": 4.9,
+    "reviews": 62,
+    "inStock": false,
+    "tag": "exclusiv"
+  }
+]

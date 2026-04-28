@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MoldaStore</title>
+  <link rel="icon" href="./assets/logo.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./css/style.css" />
+</head>
+<body>
+
+  <div id="cursor"></div>
+  <div id="cursor-ring"></div>
+  <div id="scroll-progress"></div>
+
+  <div class="search-overlay" id="searchOverlay">
+    <div class="search-box">
+      <span class="search-label">Cauta in colectie</span>
+      <div class="search-input-wrap">
+        <input class="search-input" id="searchInput" type="text" placeholder="Rochii, jachete, pantofi..." />
+        <button class="search-close" onclick="closeSearch()">✕</button>
+      </div>
+      <div class="search-suggestions">
+        <p>Cautari populare</p>
+        <div class="search-tags">
+          <span class="search-tag" onclick="setSearch('rochii de vara')">rochii de vara</span>
+          <span class="search-tag" onclick="setSearch('jachete linen')">jachete linen</span>
+          <span class="search-tag" onclick="setSearch('pantaloni casual')">pantaloni casual</span>
+          <span class="search-tag" onclick="setSearch('bluze florale')">bluze florale</span>
+          <span class="search-tag" onclick="setSearch('sandale')">sandale</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
+  <div class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+      <div class="cart-title">Cosul tau</div>
+      <button class="cart-close" onclick="closeCart()">✕</button>
+    </div>
+    <div class="cart-body" id="cartBody">
+      <div class="cart-empty">
+        <div class="cart-empty-icon">🛍</div>
+        <p>Cosul tau este gol.<br />Adauga produse pentru a incepe.</p>
+      </div>
+    </div>
+    <div class="cart-footer">
+      <div class="cart-subtotal">
+        <span class="lbl">Total</span>
+        <span class="amt" id="cartTotal">0 MDL</span>
+      </div>
+      <button class="btn-checkout" onclick="goToCheckout()">
+        Finalizeaza comanda →
+      </button>
+    </div>
+  </div>
+
+  <div class="toast" id="toast">
+    <span class="toast-icon">✓</span>
+    <span id="toastMsg">Produs adaugat in cos</span>
+  </div>
+
+  <button id="back-top" onclick="scrollToTop()" title="Sus">↑</button>
+
+  <nav id="mainNav">
+    <a class="nav-logo" href="#hero">
+      <span>Molda<span style="color:var(--accent)">Store</span></span>
+    </a>
+
+    <ul class="nav-links">
+      <li><a href="#categories">Femei</a></li>
+      <li><a href="#categories">Barbati</a></li>
+      <li><a href="#products">Colectii</a></li>
+      <li><a href="#promo" class="nav-sale">Reduceri</a></li>
+      <li><a href="despre.html">Despre</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+
+    <div class="nav-actions">
+      <button class="nav-icon-btn" title="Cautare" onclick="openSearch()">🔍</button>
+      <button id="accountBtn" class="nav-icon-btn" title="Contul meu" onclick="window.location.href='login.html'" style="font-size:13px;font-weight:600;width:auto;padding:0 14px;border-radius:999px;">👤</button>
+      <a href="login.html" class="login-btn" style="padding:9px 20px;background:var(--accent);color:white;border-radius:999px;font-weight:700;font-size:14px;text-decoration:none;">Login</a>
+      <button class="btn-cart-nav" onclick="openCart()">
+        Cos
+        <span class="cart-count" id="cartCount">0</span>
+      </button>
+    </div>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero-left">
+      <div class="hero-eyebrow">Colectia Primavara-Vara 2026</div>
+      <h1 class="hero-title">
+        Stilul tau,<br />
+        <em>cu suflet</em><br />
+        moldovenesc
+      </h1>
+      <p class="hero-sub">Eleganta pentru fiecare zi</p>
+      <p class="hero-desc">
+        Descopera o selectie atenta de tinute moderne, inspirate din traditie
+        si croite pentru viata de astazi. Livrare rapida in toata Moldova.
+      </p>
+
+      <div class="hero-cta">
+        <button class="btn-primary" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          Descopera Colectia
+        </button>
+        <button class="btn-secondary" onclick="document.getElementById('promo').scrollIntoView({behavior:'smooth'})">
+          Vezi Reducerile
+        </button>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat"><span class="num">2.400+</span><span class="lbl">Produse</span></div>
+        <div class="hero-stat"><span class="num">150+</span><span class="lbl">Branduri</span></div>
+        <div class="hero-stat"><span class="num">24h</span><span class="lbl">Livrare</span></div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-image-container">
+        <img src="https://images.unsplash.com/photo-1515372039744-b8f02a3ae446?w=800&q=85" alt="Imagine hero" class="hero-main-image" />
+        <div class="hero-badge">
+          <span class="b1">-20%</span>
+          <span class="b2">reducere</span>
+        </div>
+      </div>
+      <div class="hero-float-tag">
+        <div class="t1">Rochie Urban Grace</div>
+        <div class="t2">920 MDL · Disponibil</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee-wrap">
+    <div class="marquee-track">
+      <span class="marquee-item">Livrare gratuita peste 500 MDL <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Returnare gratuita 30 de zile <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Plata in rate fara dobanda <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Colectie noua in fiecare saptamana <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Livrare gratuita peste 500 MDL <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Returnare gratuita 30 de zile <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Plata in rate fara dobanda <span class="marquee-dot">✦</span></span>
+      <span class="marquee-item">Colectie noua in fiecare saptamana <span class="marquee-dot">✦</span></span>
+    </div>
+  </div>
+
+  <div class="features-strip reveal">
+    <div class="feature-item">
+      <span class="feature-icon">🚚</span>
+      <div class="feature-text">
+        <div class="ft">Livrare Rapida</div>
+        <div class="fs">24-48h in toata Moldova</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">↩</span>
+      <div class="feature-text">
+        <div class="ft">Returnare Gratuita</div>
+        <div class="fs">30 de zile fara intrebari</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">🔒</span>
+      <div class="feature-text">
+        <div class="ft">Plata Sigura</div>
+        <div class="fs">SSL si criptare bancara</div>
+      </div>
+    </div>
+    <div class="feature-item">
+      <span class="feature-icon">💬</span>
+      <div class="feature-text">
+        <div class="ft">Suport 7/7</div>
+        <div class="fs">Chat, telefon sau email</div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section reveal" id="categories">
+    <div class="section-header">
+      <h2 class="section-title">Cumpara dupa categorie</h2>
+      <a href="#" class="section-link">Toate categoriile →</a>
+    </div>
+
+    <div class="cat-grid">
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1490481651871-ab68de25d43d?w=600&q=80" alt="Rochii si Bluze" class="cat-img" />
+        <div class="cat-overlay">
+          <div class="cat-name">Rochii si Bluze</div>
+          <div class="cat-count">342 produse</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?w=600&q=80" alt="Casual Barbati" class="cat-img" />
+        <div class="cat-overlay">
+          <div class="cat-name">Casual Barbati</div>
+          <div class="cat-count">218 produse</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+
+      <div class="cat-card">
+        <img src="https://images.unsplash.com/photo-1548036328-c9fa89d128fa?w=600&q=80" alt="Accesorii si Incaltaminte" class="cat-img" />
+        <div class="cat-overlay">
+          <div class="cat-name">Accesorii si Incaltaminte</div>
+          <div class="cat-count">195 produse</div>
+        </div>
+        <div class="cat-arrow">↗</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="products-section reveal" id="products">
+    <div class="section-header">
+      <h2 class="section-title">Tendinte ale momentului</h2>
+      <a href="#" class="section-link">Vezi toate →</a>
+    </div>
+
+    <div class="filter-tabs">
+      <button class="filter-tab active" onclick="filterProducts('all', this)">Toate</button>
+      <button class="filter-tab" onclick="filterProducts('femei', this)">Femei</button>
+      <button class="filter-tab" onclick="filterProducts('barbati', this)">Barbati</button>
+      <button class="filter-tab" onclick="filterProducts('unisex', this)">Unisex</button>
+    </div>
+
+    <div class="prod-grid" id="prodGrid"></div>
+  </section>
+
+  <div id="promo" class="reveal promo-wrapper">
+    <div class="promo-banner">
+      <div class="promo-left">
+        <div class="promo-eyebrow">Oferta Limitata</div>
+        <div class="promo-title">Sezonul reducerilor a inceput in forta</div>
+        <div class="promo-sub">Mii de produse cu preturi reduse, valabil pana pe 30 aprilie 2026</div>
+      </div>
+      <div class="promo-right">
+        <div class="promo-num"><sup>-</sup>30<sup>%</sup></div>
+        <button class="btn-primary btn-terracotta" onclick="document.getElementById('products').scrollIntoView({behavior:'smooth'})">
+          Profita acum →
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="brands-section reveal">
+    <div class="brands-title">Branduri partenere</div>
+    <div class="brands-row">
+      <div class="brand-pill">Zara</div>
+      <div class="brand-pill">H&amp;M</div>
+      <div class="brand-pill">Mango</div>
+      <div class="brand-pill">Reserved</div>
+      <div class="brand-pill">Bershka</div>
+      <div class="brand-pill">Massimo Dutti</div>
+    </div>
+  </div>
+
+  <section class="testimonials-section reveal">
+    <div class="section-header">
+      <h2 class="section-title">Ce spun clientii nostri</h2>
+      <a href="#" class="section-link">Toate recenziile →</a>
+    </div>
+
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Am comandat o rochie pentru o nunta si a sosit in 24 de ore. Calitatea materialului este excelenta.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">AM</div>
+          <div>
+            <div class="testi-name">Ana M.</div>
+            <div class="testi-loc">Chisinau</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★★</div>
+        <div class="testi-text">Preturi accesibile, livrare rapida si serviciu clienti excelent. Recomand cu drag.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">DL</div>
+          <div>
+            <div class="testi-name">Dumitru L.</div>
+            <div class="testi-loc">Balti</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="testi-card">
+        <div class="testi-stars">★★★★☆</div>
+        <div class="testi-text">Selectia este uriasa si se actualizeaza constant. Un magazin online foarte profesionist.</div>
+        <div class="testi-author">
+          <div class="testi-avatar">IC</div>
+          <div>
+            <div class="testi-name">Irina C.</div>
+            <div class="testi-loc">Cahul</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="newsletter-section reveal">
+    <h2 class="section-title">Fii primul care afla</h2>
+    <p class="newsletter-sub">Aboneaza-te si primesti -10% la prima comanda, plus acces exclusiv la colectiile noi.</p>
+    <div class="newsletter-form">
+      <input class="newsletter-input" id="emailInput" type="email" placeholder="adresa@email.md" />
+      <button class="newsletter-btn" onclick="subscribeNewsletter()">Aboneaza-ma</button>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <a class="footer-logo" href="#">
+          
+          <span>MoldaStore</span>
+        </a>
+        <p class="footer-desc">Magazin de moda online cu livrare rapida in toata Republica Moldova. Calitate, stil si preturi accesibile pentru fiecare zi.</p>
+      </div>
+
+      <div class="footer-col">
+        <h4>Magazin</h4>
+        <ul>
+          <li><a href="index.html#categories">Femei</a></li>
+          <li><a href="index.html#categories">Barbati</a></li>
+          <li><a href="index.html#products">Colectii noi</a></li>
+          <li><a href="index.html#promo">Reduceri</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Ajutor</h4>
+        <ul>
+          <li><a href="livrare.html">Livrare si Returnare</a></li>
+          <li><a href="livrare.html">Ghid marimi</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="livrare.html">FAQ</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-col">
+        <h4>Informatii</h4>
+        <ul>
+          <li><a href="despre.html">Despre noi</a></li>
+          <li><a href="contact.html">Contact</a></li>
+          <li><a href="livrare.html">Termeni si Conditii</a></li>
+          <li><a href="cont.html">Contul meu</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="footer-bottom">
+      <p>© 2026 MoldaStore. Toate drepturile rezervate.</p>
+    </div>
+  </footer>
+
+  <script src="./js/script.js"></script>
+
+  <!-- AUTH MODAL -->
+  <div class="auth-modal-overlay" id="authModal" onclick="if(event.target===this)closeAuthModal()">
+    <div class="auth-modal">
+      <button class="auth-modal-close" onclick="closeAuthModal()">✕</button>
+      <div class="auth-modal-icon">🛍️</div>
+      <h2 class="auth-modal-title">Vrei să adaugi în coș?</h2>
+      <p class="auth-modal-sub">Creează un cont sau autentifică-te pentru a salva produsele și a finaliza comanda.</p>
+      <div class="auth-modal-actions">
+        <button class="auth-btn-login" onclick="goToLogin()">
+          <span>🔑</span> Intră în cont
+        </button>
+        <button class="auth-btn-register" onclick="goToRegister()">
+          <span>✨</span> Creează cont gratuit
+        </button>
+        <button class="auth-btn-guest" onclick="continueAsGuest()">
+          Continuă fără cont
+        </button>
+      </div>
+      <p class="auth-modal-note">Fără cont nu vei putea salva istoricul comenzilor.</p>
+    </div>
+  </div>
+</body>
+</html>
